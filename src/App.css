@@ -7,3 +7,7 @@
   pointer-events: none;
   margin: 50px;
 }
+
+.error-message {
+  color: red;
+}
