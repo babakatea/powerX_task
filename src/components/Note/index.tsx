@@ -24,6 +24,7 @@ export function Note() {
     user: { id: userId },
   } = auth;
 
+  // axios setup
   const api = axios.create({
     baseURL: 'https://60b793ec17d1dc0017b8a6bc.mockapi.io/',
     headers: {
@@ -31,6 +32,7 @@ export function Note() {
     },
   });
 
+  // get the note of the current user
   const getNote = async () => {
     try {
       const {data} = await api.get(`/users/${userId}/`);
@@ -41,6 +43,7 @@ export function Note() {
     }
   }
 
+  // update the note of the current user
   const createNote = async (note: string) => {
     try {
       await api.put(`/users/${userId}/`, {note});
@@ -68,14 +71,14 @@ function NoteField({ apiToken, getNote, createNote }: AuthProps) {
   const [note, setNote] = useState<string>('');
 
   useEffect(() => {
-    getNote().then((response: string) => setNote(response));
+    getNote().then((response: string) => setNote(response)); // if token then get the user`s note
   }, [apiToken]);
 
   const onChangeNote = async (event: ChangeEvent<HTMLTextAreaElement>) => {
     const {target: {value}} = event;
 
     setNote(value);
-    await createNote(value);
+    await createNote(value); // update the note on input change
   }
 
   return(
